@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberaTech — Admin Leads</title>
+<style>
+  :root{--navy:#080d1a;--navy2:#0c1221;--navy3:#111a30;--gold:#c9a84c;--gold2:#e2c06a;--white:#f4f1e8;--dim:rgba(244,241,232,0.6);--border:rgba(201,168,76,0.18);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--navy);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;}
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap');
+  header{background:var(--navy2);border-bottom:1px solid var(--border);padding:1.2rem 2rem;display:flex;justify-content:space-between;align-items:center;}
+  .logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;}
+  .logo em{color:var(--gold);font-style:normal;}
+  .badge-count{background:var(--gold);color:var(--navy);padding:.25rem .8rem;font-size:.78rem;font-weight:500;border-radius:999px;}
+  main{max-width:1300px;margin:2rem auto;padding:0 2rem;}
+  h1{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;margin-bottom:.4rem;}
+  h1 em{color:var(--gold);font-style:normal;}
+  .sub{color:var(--dim);font-size:.88rem;margin-bottom:2rem;}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
+  .stat{background:var(--navy2);border:1px solid var(--border);padding:1.2rem 1.5rem;}
+  .stat-n{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--gold);}
+  .stat-l{font-size:.72rem;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;}
+  .toolbar{display:flex;gap:1rem;margin-bottom:1.2rem;flex-wrap:wrap;align-items:center;}
+  input.search{background:var(--navy2);border:1px solid var(--border);color:var(--white);padding:.6rem 1rem;font-size:.85rem;width:280px;outline:none;}
+  input.search::placeholder{color:var(--dim);}
+  select.filter{background:var(--navy2);border:1px solid var(--border);color:var(--white);padding:.6rem 1rem;font-size:.85rem;outline:none;}
+  .btn-export{background:var(--gold);color:var(--navy);border:none;padding:.6rem 1.4rem;font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;}
+  .btn-export:hover{background:var(--gold2);}
+  .table-wrap{overflow-x:auto;border:1px solid var(--border);}
+  table{width:100%;border-collapse:collapse;font-size:.84rem;}
+  thead{background:var(--navy3);}
+  th{padding:1rem;text-align:left;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:500;border-bottom:1px solid var(--border);white-space:nowrap;}
+  td{padding:.9rem 1rem;border-bottom:1px solid rgba(201,168,76,0.06);color:var(--dim);vertical-align:top;}
+  tr:hover td{background:rgba(201,168,76,0.03);}
+  td.name{color:var(--white);font-weight:400;}
+  .pill{display:inline-block;padding:.2rem .7rem;border:1px solid var(--border);font-size:.7rem;letter-spacing:.06em;color:var(--gold);text-transform:uppercase;white-space:nowrap;}
+  .msg{max-width:260px;white-space:pre-wrap;word-break:break-word;font-size:.8rem;}
+  .del{background:none;border:1px solid rgba(255,80,80,0.25);color:rgba(255,100,100,0.7);padding:.3rem .7rem;font-size:.72rem;cursor:pointer;transition:.2s;}
+  .del:hover{border-color:#ff5050;color:#ff5050;}
+  .empty{text-align:center;padding:4rem;color:var(--dim);}
+  .empty span{font-size:2.5rem;display:block;margin-bottom:1rem;}
+  .loading{text-align:center;padding:3rem;color:var(--gold);}
+  .ts{font-size:.75rem;color:rgba(244,241,232,0.35);}
+  @media(max-width:700px){.stats{grid-template-columns:1fr 1fr;}.toolbar{flex-direction:column;align-items:stretch;}input.search{width:100%;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Cybera<em>Tech</em> &mdash; Admin</div>
+  <span class="badge-count" id="count">Loading…</span>
+</header>
+
+<main>
+  <h1>Contact <em>Leads</em></h1>
+  <p class="sub">All form submissions from the website, newest first.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-n" id="s-total">—</div><div class="stat-l">Total Leads</div></div>
+    <div class="stat"><div class="stat-n" id="s-today">—</div><div class="stat-l">Today</div></div>
+    <div class="stat"><div class="stat-n" id="s-service">—</div><div class="stat-l">Most Requested</div></div>
+    <div class="stat"><div class="stat-n" id="s-budget">—</div><div class="stat-l">Top Budget</div></div>
+  </div>
+
+  <div class="toolbar">
+    <input class="search" id="searchBox" type="text" placeholder="Search name, email, company…" oninput="renderTable()">
+    <select class="filter" id="serviceFilter" onchange="renderTable()">
+      <option value="">All Services</option>
+      <option>Business Website</option>
+      <option>E-Commerce Store</option>
+      <option>Custom Web Application</option>
+      <option>Website Security Audit</option>
+      <option>VAPT — Web Application</option>
+      <option>Network VAPT</option>
+      <option>SOC-as-a-Service</option>
+      <option>Secure Bundle (Web + Security)</option>
+      <option>Not sure — need consultation</option>
+    </select>
+    <button class="btn-export" onclick="exportCSV()">⬇ Export CSV</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Company</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Service</th>
+          <th>Budget</th>
+          <th>Message</th>
+          <th>Submitted</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr><td colspan="10" class="loading">Loading leads…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+let allLeads = [];
+
+async function loadLeads() {
+  try {
+    const res = await fetch('/api/leads');
+    allLeads = await res.json();
+    updateStats();
+    renderTable();
+    document.getElementById('count').textContent = allLeads.length + ' leads';
+  } catch(e) {
+    document.getElementById('tbody').innerHTML = '<tr><td colspan="10" class="empty"><span>⚠️</span>Could not connect to server.<br>Make sure the backend is running on port 3000.</td></tr>';
+  }
+}
+
+function updateStats() {
+  document.getElementById('s-total').textContent = allLeads.length;
+
+  // Today's count
+  const today = new Date().toISOString().slice(0, 10);
+  const todayCount = allLeads.filter(l => l.submitted_at && l.submitted_at.startsWith(today)).length;
+  document.getElementById('s-today').textContent = todayCount;
+
+  // Most requested service
+  const svcMap = {};
+  allLeads.forEach(l => { if(l.service) svcMap[l.service] = (svcMap[l.service]||0)+1; });
+  const topSvc = Object.entries(svcMap).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('s-service').textContent = topSvc ? topSvc[0].split(' ')[0] : '—';
+
+  // Top budget
+  const budMap = {};
+  allLeads.forEach(l => { if(l.budget) budMap[l.budget] = (budMap[l.budget]||0)+1; });
+  const topBud = Object.entries(budMap).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('s-budget').textContent = topBud ? topBud[0].replace('₹','').split('–')[0].trim() : '—';
+}
+
+function renderTable() {
+  const q = document.getElementById('searchBox').value.toLowerCase();
+  const sf = document.getElementById('serviceFilter').value;
+  let rows = allLeads.filter(l => {
+    const match = !q || [l.name,l.email,l.company,l.phone,l.message].some(v => v && v.toLowerCase().includes(q));
+    const svc = !sf || l.service === sf;
+    return match && svc;
+  });
+
+  const tbody = document.getElementById('tbody');
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="10" class="empty"><span>🔍</span>No leads match your filter.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rows.map(l => `
+    <tr>
+      <td class="ts">${l.id}</td>
+      <td class="name">${esc(l.name)}</td>
+      <td>${esc(l.company||'—')}</td>
+      <td><a href="mailto:${esc(l.email)}" style="color:var(--gold);text-decoration:none;">${esc(l.email)}</a></td>
+      <td>${esc(l.phone||'—')}</td>
+      <td>${l.service ? `<span class="pill">${esc(l.service)}</span>` : '—'}</td>
+      <td style="white-space:nowrap;font-size:.78rem;">${esc(l.budget||'—')}</td>
+      <td><div class="msg">${esc(l.message||'—')}</div></td>
+      <td class="ts" style="white-space:nowrap;">${esc(l.submitted_at||'')}</td>
+      <td><button class="del" onclick="deleteLead(${l.id}, this)">Delete</button></td>
+    </tr>
+  `).join('');
+}
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+async function deleteLead(id, btn) {
+  if (!confirm('Delete this lead permanently?')) return;
+  btn.disabled = true; btn.textContent = '…';
+  await fetch('/api/leads/'+id, { method:'DELETE' });
+  allLeads = allLeads.filter(l => l.id !== id);
+  updateStats();
+  renderTable();
+  document.getElementById('count').textContent = allLeads.length + ' leads';
+}
+
+function exportCSV() {
+  const headers = ['ID','Name','Company','Email','Phone','Service','Budget','Message','Submitted'];
+  const rows = allLeads.map(l => [l.id, l.name, l.company, l.email, l.phone, l.service, l.budget, l.message, l.submitted_at].map(v => `"${String(v||'').replace(/"/g,'""')}"`).join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'cyberatech-leads.csv';
+  a.click();
+}
+
+loadLeads();
+</script>
+</body>
+</html>

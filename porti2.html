@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing</title>
+
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg,#020617,#0f172a);
+  color: white;
+  margin: 0;
+}
+
+.header {
+  text-align: center;
+  padding: 60px 20px;
+}
+.header h1 {
+  font-size: 42px;
+}
+.header p {
+  color: #94a3b8;
+}
+
+.toggle {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.toggle button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.active {
+  background: #38bdf8;
+  color: black;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  padding: 25px;
+  border-radius: 16px;
+  transition: 0.4s;
+  border: 1px solid rgba(255,255,255,0.1);
+  opacity: 0;
+  transform: translateY(40px);
+}
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: #38bdf8;
+}
+
+.badge {
+  display: inline-block;
+  background: #22c55e;
+  color: black;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 26px;
+  color: #38bdf8;
+  margin: 10px 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+ul li {
+  margin: 6px 0;
+  color: #cbd5f5;
+}
+
+.btn {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 10px;
+  background: linear-gradient(90deg,#38bdf8,#22c55e);
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>Pricing Plans</h1>
+<p>Flexible pricing for startups, businesses & enterprise clients</p>
+</div>
+
+<div class="toggle">
+<button onclick="setCurrency('INR')" class="active" id="inrBtn">INR</button>
+<button onclick="setCurrency('USD')" id="usdBtn">USD</button>
+</div>
+
+<!-- BASIC SERVICES -->
+<div class="grid">
+
+<div class="card">
+<h3>Starter Website</h3>
+<div class="price" data-inr="5000" data-usd="99">₹5,000</div>
+<ul>
+<li>✔ 3–5 Pages</li>
+<li>✔ Responsive Design</li>
+<li>✔ Basic SEO</li>
+<li>✔ Deployment</li>
+<li><b>🔁 Maintenance:</b></li>
+<li>➡ ₹2000/month | $39/month</li>
+</ul>
+<a href="https://wa.me/917676751069?text=Starter Website" class="btn">Get Started</a>
+</div>
+
+<div class="card">
+<h3>Security Audit</h3>
+<div class="price" data-inr="5000" data-usd="120">₹5,000</div>
+<ul>
+<li>✔ Vulnerability Scan</li>
+<li>✔ OWASP Checks</li>
+<li>✔ Report</li>
+<li><b>🔁 Monthly Scan:</b></li>
+<li>➡ ₹3000/month | $59/month</li>
+</ul>
+<a href="https://wa.me/917676751069?text=Security Audit" class="btn">Get Started</a>
+</div>
+
+<div class="card">
+<h3>Monitoring</h3>
+<div class="price" data-inr="5000" data-usd="79">₹5,000/mo</div>
+<ul>
+<li>✔ Uptime Monitoring</li>
+<li>✔ Alerts</li>
+<li>✔ Performance Tracking</li>
+</ul>
+<a href="https://wa.me/917676751069?text=Monitoring" class="btn">Subscribe</a>
+</div>
+
+</div>
+
+<!-- SECURITY TOOLS -->
+<div class="header">
+<h1>Security Tools & SOC Services</h1>
+<p>Setup + Monthly Monitoring (Professional SOC Model)</p>
+</div>
+
+<div class="grid">
+
+<!-- SENTINEL -->
+<div class="card">
+<span class="badge">SIEM + SOC</span>
+<h3>Microsoft Sentinel</h3>
+<div class="price" data-inr="20000" data-usd="399">₹20,000 Setup</div>
+<ul>
+<li><b>⚙️ Setup:</b></li>
+<li>✔ Log Integration</li>
+<li>✔ Rules & Alerts</li>
+<li><b>🔁 Monthly:</b></li>
+<li>➡ ₹15,000/month</li>
+<li>➡ $299/month</li>
+</ul>
+<a href="https://wa.me/917676751069?text=Sentinel Setup" class="btn">Configure</a>
+</div>
+
+<!-- SPLUNK -->
+<div class="card">
+<span class="badge">Enterprise SIEM</span>
+<h3>Splunk Setup</h3>
+<div class="price" data-inr="30000" data-usd="599">₹30,000 Setup</div>
+<ul>
+<li>✔ Log Ingestion</li>
+<li>✔ Dashboards</li>
+<li><b>🔁 Monthly:</b></li>
+<li>➡ ₹20,000/month</li>
+<li>➡ $399/month</li>
+</ul>
+<a href="https://wa.me/917676751069?text=Splunk Setup" class="btn">Setup</a>
+</div>
+
+<!-- SERVICENOW -->
+<div class="card">
+<span class="badge">ITSM</span>
+<h3>ServiceNow</h3>
+<div class="price" data-inr="25000" data-usd="499">₹25,000 Setup</div>
+<ul>
+<li>✔ Ticketing</li>
+<li>✔ Workflow Automation</li>
+<li><b>🔁 Monthly:</b></li>
+<li>➡ ₹10,000/month</li>
+<li>➡ $199/month</li>
+</ul>
+<a href="https://wa.me/917676751069?text=ServiceNow Setup" class="btn">Configure</a>
+</div>
+
+<!-- JIRA -->
+<div class="card">
+<span class="badge">Workflow</span>
+<h3>Jira Setup</h3>
+<div class="price" data-inr="10000" data-usd="199">₹10,000 Setup</div>
+<ul>
+<li>✔ Project Setup</li>
+<li>✔ Tracking</li>
+<li><b>🔁 Monthly:</b></li>
+<li>➡ ₹5,000/month</li>
+<li>➡ $99/month</li>
+</ul>
+<a href="https://wa.me/917676751069?text=Jira Setup" class="btn">Setup</a>
+</div>
+
+<!-- ENTERPRISE SOC -->
+<div class="card">
+<span class="badge">Enterprise SOC</span>
+<h3>Enterprise Security Stack</h3>
+<div class="price" data-inr="100000" data-usd="2500">₹1,00,000 Setup</div>
+<ul>
+<li><b>⚙️ Setup:</b></li>
+<li>✔ SIEM + SOAR</li>
+<li>✔ Full Integration</li>
+
+<li><b>🔁 Monthly SOC (10 Team):</b></li>
+<li>✔ 24/7 Monitoring</li>
+<li>✔ Incident Response</li>
+<li>✔ Threat Detection</li>
+
+<li><b>💰 Pricing:</b></li>
+<li>➡ ₹5,00,000/month</li>
+<li>➡ $7000/month</li>
+</ul>
+<a href="https://wa.me/917676751069?text=Enterprise SOC" class="btn">Contact Now</a>
+</div>
+
+</div>
+
+<script>
+function setCurrency(type){
+  const prices = document.querySelectorAll('.price');
+  prices.forEach(p=>{
+    if(type==='USD'){
+      p.innerHTML="$"+p.getAttribute('data-usd');
+    } else {
+      p.innerHTML="₹"+p.getAttribute('data-inr');
+    }
+  });
+
+  document.getElementById('inrBtn').classList.remove('active');
+  document.getElementById('usdBtn').classList.remove('active');
+  document.getElementById(type.toLowerCase()+'Btn').classList.add('active');
+}
+
+const cards = document.querySelectorAll('.card');
+window.addEventListener('scroll', () => {
+  cards.forEach(card => {
+    const top = card.getBoundingClientRect().top;
+    if(top < window.innerHeight - 50){
+      card.classList.add('show');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
